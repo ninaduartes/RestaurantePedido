@@ -1,0 +1,35 @@
+.container{
+    height: calc(20vh - 20px);
+    background-color: #ec1f26;
+    display: flex;
+
+}
+
+.item{
+    flex: 1;
+    position: relative;
+    display: flex;
+}
+
+.card{
+    flex: 1;
+    padding: 0 20px;
+}
+
+.cardL{
+    flex:-1;
+    padding: 0 20px;
+    text-align: right;
+}
+
+
+
+
+.title{
+    font-size: 18px;
+    color: whitesmoke;  
+}
+
+.text{
+    color: whitesmoke;
+}
