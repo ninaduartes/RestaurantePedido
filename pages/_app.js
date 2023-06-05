@@ -1,9 +1,16 @@
-import Layout from '@/components/Layout'
+import Layout from "../components/Layout";
+import "../styles/globals.css";
+import store from "../redux/store";
+import { Provider } from "react-redux";
 
-export default function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   );
 }
+
+export default MyApp;
