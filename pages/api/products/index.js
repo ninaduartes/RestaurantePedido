@@ -1,12 +1,11 @@
-import dbConnect from "../../../util/mongo";
-import Product from "../../../models/Product";
+import dbConnect from "@/util/mongo";
+import Product from "@/models/Product";
 
 export default async function handler(req, res) {
-  const { method, cookies } = req;
+  const { method } = req;
 
-  const token = cookies.token
 
-  dbConnect();
+  await dbConnect();
 
   if (method === "GET") {
     try {

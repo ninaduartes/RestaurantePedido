@@ -1,8 +1,9 @@
-import styles from "../../styles/Order.module.css"
+import axios from "axios";
+import styles from "../../styles/Order.module.css";
 import Image from "next/image";
 
-const Order = () => {
-    const status = 0
+const Order = ({order}) => {
+    const status = order.status;
     const statusClass = (index)=>{
         if(index-status <1) return styles.done
         if(index-status === 1) return styles.inProgress
@@ -16,24 +17,22 @@ const Order = () => {
                 <table className={styles.table}>
           <tr className={styles.trTitle}>
             <th>Id do Pedido</th>
-            <th>Cliente</th>
+            <th>Nome Cliente</th>
             <th>Endereço</th>
             <th>Total</th>
           </tr>
           <tr className={styles.tr}>
             <td>
-              <span className={styles.id}>123456789</span>
+              <span className={styles.id}>{order._id}</span>
             </td>
             <td>
-              <span className={styles.name}>
-                Buzz Lightyear
-              </span>
+              <span className={styles.name}>{order.customer}</span>
             </td>
             <td>
-              <span className={styles.addres}>Pixar Studios Av</span>
+              <span className={styles.address}>{order.address}</span>
             </td>
             <td>
-              <span className={styles.total}>R$39.80</span>
+              <span className={styles.total}>R${order.total}</span>
             </td>
           </tr>
         </table>
@@ -78,20 +77,24 @@ const Order = () => {
             <div className={styles.wrapper}>
                 <h2 className={styles.title}>TOTAL DA COMPRA</h2>
                 <div className={styles.totalText}>
-                    <b className={styles.totalTextTitle}>Subtotal:</b>R$79.60
+                    <b className={styles.totalTextTitle}>Subtotal:</b>R${order.total}
           </div>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Desconto:</b>R$0.00
+            <b className={styles.totalTextTitle}>Total:</b>R${order.total}
           </div>
-          <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Total:</b>R$79.60
-          </div>
-          <button disabled className={styles.button}>PAGO!</button>
+          <button disabled className={styles.button}>Pagar na entrega!</button>
         </div>
             </div>
 
         </div>
     );
+};
+
+export const getServerSideProps = async ({ params }) => {
+  const res = await axios.get(`http://localhost:3000/api/orders/${params.id}`);
+  return{
+    props: { order: res.data },
+  };
 };
 
 export default Order

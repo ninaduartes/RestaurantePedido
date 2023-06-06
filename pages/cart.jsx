@@ -1,14 +1,38 @@
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import cartSlice from "@/redux/cartSlice";
+import { reset } from "@/redux/cartSlice";
+import OrderDetail from "@/components/OrderDetail";
+
 
 const Cart = () => {
-  const dispatch = useDispatch()
-  const cart = useSelector(state=>state.cart);
+  const cart = useSelector((state) => state.cart);
+  const [open, setOpen] = useState(false);
+  const [cash, setCash] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const createOrder = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+      if (res.status === 201) {
+        dispatch(reset());
+        router.push(`/orders/${res.data._id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <table className={styles.table}>
+          <tbody>
           <tr className={styles.trTitle}>
             <th>Produto</th>
             <th>Nome</th>
@@ -17,6 +41,8 @@ const Cart = () => {
             <th>Quantidade</th>
             <th>Total</th>
           </tr>
+          </tbody>
+          <tbody>
           {cart.products.map(product => (
           <tr className={styles.tr} key={product._id}>
             <td>
@@ -51,6 +77,7 @@ const Cart = () => {
             </td>
           </tr>
           ))}
+          </tbody>
         </table>
       </div>
       <div className={styles.right}>
@@ -65,11 +92,18 @@ const Cart = () => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b>R${cart.total}
           </div>
-          <button className={styles.button}>Finalize o pedido!</button>
+          {open ? (
+            <div className={styles.paymentMethods}>
+              <button className={styles.payButton} onClick={()=>setCash(true)}>PAGAMENTO NA ENTREGA</button>
+            </div>
+          ) : ( <button onClick={()=>setOpen(true)} className={styles.button}>Finalize o pedido!</button>
+          )}
         </div>
       </div>
+      {cash && (
+        <OrderDetail total={cart.total} createOrder={createOrder}/>
+      )}
     </div>
   );
 };
-
 export default Cart;

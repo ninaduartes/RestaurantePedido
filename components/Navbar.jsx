@@ -14,10 +14,10 @@ const Navbar = () => {
         <div className={styles.item}>
         <Image src="/img/logoWhite.png" alt="" width={160} height={69}/>
             <ul className={styles.list}>
+              <Link href="/">
                 <li className={styles.listItem}>Menu</li>
+              </Link>
                 <li className={styles.listItem}>Pedidos</li>
-
-
             </ul>
       </div>
       < div className={styles.item}>
