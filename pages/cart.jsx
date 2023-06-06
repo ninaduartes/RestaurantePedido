@@ -1,10 +1,9 @@
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import cartSlice from "@/redux/cartSlice";
 import { reset } from "@/redux/cartSlice";
 import OrderDetail from "@/components/OrderDetail";
 
@@ -86,9 +85,6 @@ const Cart = () => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Subtotal:</b>R${cart.total}
           </div>
-          {/* <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Desconto:</b>R$0.00
-          </div> */}
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b>R${cart.total}
           </div>
