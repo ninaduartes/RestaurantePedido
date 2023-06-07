@@ -3,10 +3,10 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "../../styles/Admin.module.css";
 
-const Index = ({ orders, products }) => {
+const Index = ({ orders, products, admin }) => {
   const [orderList, setOrderList] = useState(orders);
   const [pizzaList, setPizzaList] = useState(products);
-  const status = ["preparing", "on the way", "delivered"];
+  const status = ["Preparando", "A caminho", "Entregue"];
 
   const handleDelete = async (id) => {
     console.log(id);
@@ -105,7 +105,7 @@ const Index = ({ orders, products }) => {
                 <td>{status[order.status]}</td>
                 <td>
                   <button onClick={() => handleStatus(order._id)}>
-                    Next Stage
+                    Próximo Passo
                   </button>
                 </td>
               </tr>

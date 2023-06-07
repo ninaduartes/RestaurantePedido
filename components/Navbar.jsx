@@ -20,11 +20,14 @@ const Navbar = () => {
                 <li className={styles.listItem}>Pedidos</li>
             </ul>
       </div>
+      <Link href="/admin/login">
       < div className={styles.item}>
         <ul className={styles.list}>
       <li className={styles.listItemL}>Login Funcionários</li>
       </ul>
       </div>
+      </Link>
+      
       <Link href="/cart">
         <div className={styles.item}>
           <div className={styles.cart}>

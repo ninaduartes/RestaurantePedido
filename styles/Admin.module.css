@@ -20,7 +20,7 @@
     padding: 5px;
     cursor: pointer;
   }
-  
+ 
   .button:first-child {
     background-color: teal;
     margin-right: 10px;
@@ -28,4 +28,13 @@
   
   .button:last-child {
     background-color: crimson;
+  }
+
+ 
+  .buttonCad{
+    background-color: lightpink;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 15px;
   }
