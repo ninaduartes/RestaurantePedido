@@ -7,6 +7,13 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       maxlength: 60,
     },
+
+    cpf: {
+      type: String,
+      required: true,
+      maxlength: 18,
+    },
+
     address: {
       type: String,
       required: true,

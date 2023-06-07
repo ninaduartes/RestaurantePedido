@@ -4,7 +4,7 @@ import Order from "@/models/Order";
 const handler = async (req, res) => {
   const {
     method,
-    query: { id },
+    query: { id, cpf},
   } = req;
 
   await dbConnect();
@@ -17,6 +17,8 @@ const handler = async (req, res) => {
       res.status(500).json(err);
     }
   }
+
+
   if (method === "PUT") {
     try {
       const order = await Order.findByIdAndUpdate(id, req.body, {

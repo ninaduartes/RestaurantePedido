@@ -3,10 +3,11 @@ import styles from "../styles/OrderDetail.module.css";
 
 const OrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
+  const [cpf, setCPF] = useState("");
   const [address, setAddress] = useState("");
 
   const handleClick = () => {
-    createOrder({ customer, address, total, method: 0 });
+    createOrder({ customer, cpf, address, total, method: 0 });
   };
 
   return (
@@ -22,6 +23,17 @@ const OrderDetail = ({ total, createOrder }) => {
             onChange={(e) => setCustomer(e.target.value)}
           />
         </div>
+
+        <div className={styles.item}>
+          <label className={styles.label}>CPF</label>
+          <input
+            placeholder="000.000.000-00"
+            type="text"
+            className={styles.input}
+            onChange={(e) => setCPF(e.target.value)}
+          />
+        </div>
+
         <div className={styles.item}>
           <label className={styles.label}>Telefone</label>
           <input

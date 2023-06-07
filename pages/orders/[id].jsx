@@ -18,6 +18,7 @@ const Order = ({ order }) => {
             <tr className={styles.trTitle}>
               <th>Order ID</th>
               <th>Customer</th>
+              <th>CPF</th>
               <th>Address</th>
               <th>Total</th>
             </tr>
@@ -27,6 +28,9 @@ const Order = ({ order }) => {
               </td>
               <td>
                 <span className={styles.name}>{order.customer}</span>
+              </td>
+              <td>
+                <span className={styles.cpf}>{order.cpf}</span>
               </td>
               <td>
                 <span className={styles.address}>{order.address}</span>
