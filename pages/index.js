@@ -7,8 +7,7 @@ import axios from 'axios'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({pizzaList}) {
-  
+export default function Home({ pizzaList }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,8 +16,8 @@ export default function Home({pizzaList}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PizzaList pizzaList={pizzaList}/>
-      </div>
+      <PizzaList pizzaList={pizzaList} />
+    </div>
   );
 }
 

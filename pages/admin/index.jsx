@@ -6,7 +6,7 @@ import styles from "../../styles/Admin.module.css";
 const Index = ({ orders, products, admin }) => {
   const [orderList, setOrderList] = useState(orders);
   const [pizzaList, setPizzaList] = useState(products);
-  const status = ["Preparando", "A caminho", "Entregue"];
+  const status = ["Pagou", "Preparando", "A caminho", "Entregue"];
 
   const handleDelete = async (id) => {
     console.log(id);
