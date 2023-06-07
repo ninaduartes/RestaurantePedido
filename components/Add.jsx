@@ -45,7 +45,7 @@ const Add = ({ setClose }) => {
       };
 
       await axios.post("http://localhost:3000/api/products", newProduct);
-      setClose(true);
+      setClose(true); // Fechar o componente após adicionar um funcionário
     } catch (err) {
       console.log(err);
     }

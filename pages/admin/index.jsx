@@ -1,6 +1,6 @@
 import axios from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../../styles/Admin.module.css";
 import AddButton from "@/components/AddButton";
 import Add from "@/components/Add";
@@ -10,6 +10,23 @@ const Index = ({ orders, products, admin }) => {
   const [orderList, setOrderList] = useState(orders);
   const [pizzaList, setPizzaList] = useState(products);
   const status = ["Pagou", "Preparando", "A caminho", "Entregue"];
+
+  const fetchOrders = async () => {
+    try {
+      const orderRes = await axios.get("http://localhost:3000/api/orders");
+      setOrderList(orderRes.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(fetchOrders, 20000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   const handleDelete = async (id) => {
     console.log(id);
@@ -121,14 +138,14 @@ const Index = ({ orders, products, admin }) => {
   );
 };
 
-export const getServerSideProps = async(ctx) => {
+export const getServerSideProps = async (ctx) => {
   const myCookie = ctx.req?.cookies || "";
 
-  if(myCookie.token!== process.env.TOKEN){
-    return{
-      redirect:{
-        destination:"/admin/login",
-        permanent:false,
+  if (myCookie.token !== process.env.TOKEN) {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
       },
     };
   }

@@ -1,42 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/Cpf.module.css";
 import Image from "next/image";
 import axios from "axios";
+
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current();
+    };
+
+    if (delay !== null) {
+      const intervalId = setInterval(tick, delay);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [delay]);
+};
 
 const Order = () => {
   const router = useRouter();
   const [cpf, setCpf] = useState("");
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3000/api/orders?cpf=${cpf}`);
-        setOrders(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    if (cpf) {
-      fetchOrders();
-    }
-  }, [cpf]);
-
-  const fetchOrderDetails = async (orderId) => {
-    try {
-      const res = await axios.get(`http://localhost:3000/api/orders/${orderId}`);
-      return res.data;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the form submission from refreshing the page
-
+  const fetchOrders = async () => {
     try {
       const res = await axios.get(`http://localhost:3000/api/orders?cpf=${cpf}`);
       setOrders(res.data);
@@ -44,6 +38,16 @@ const Order = () => {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (cpf) {
+      fetchOrders();
+    }
+  }, [cpf]);
+
+  useInterval(() => {
+    fetchOrders();
+  }, 30000);
 
   const getOrderStatusText = (status) => {
     switch (status) {
@@ -63,6 +67,18 @@ const Order = () => {
   const handleOrderDetails = (orderId) => {
     router.push(`/orders/${orderId}`);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the form submission from refreshing the page
+
+    try {
+      const res = await axios.get(`http://localhost:3000/api/orders?cpf=${cpf}`);
+      setOrders(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
   return (
     <div className={styles.container}>
